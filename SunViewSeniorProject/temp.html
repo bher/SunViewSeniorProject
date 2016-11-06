@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="scripts/routechecking.js" type="text/javascript"></script>
+    
+</head>
+<body ng-app="myRouting" ng-controller="ctrlRouting">
+    <img src="/img/fireworks.gif" />
+    <h1> Hi there, you have successfully logged in! Congratulations!</h1>
+    <div>
+        <img src="img/movinggears.gif" />
+        <h1> The application is still currently under construction. Please visit again later, much later.</h1>
+        <br />
+        Push this button to logout:
+        <button ng-click="logout()">Logout</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿.myBody div md-content md-tabs md-tabs-canvas {
+    background: linear-gradient(orange, yelloworange) !important;
+}
+md-input-container.md-default-theme label, 
+ md-input-container.md-default-theme .md-placeholder{
+    color:grey !important;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+    border-color: white;
+}
+
+md-input-container{
+    background-color:#d8d0d0 !important;
+}
+
+md-input-container.md-default-theme label,   
+md-input-container.md-default-theme .md-placeholder {  
+    color: #FDFE67 !important; 
+} 
+label {
+    color:black; font-weight:bold; font-size:20px;
+}
+
+selectedIndex{
+    color:yellow;
+}
+selectedIndex2{
+    background:gray;
+}
+.md-input{
+    padding:5px;
+}
