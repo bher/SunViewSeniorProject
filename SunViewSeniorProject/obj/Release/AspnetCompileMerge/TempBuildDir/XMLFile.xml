@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=301879
+  
+  This file drives the ChangeGear to Microsoft TFS integration. It contains configuration information for the app as well as mappings on integrating between the two systems.
+  
+  There are Rest API's available to dynamically get the possible field values from both systems but currently only the fields desired are configured here, using internal field names rather than display names.
+  -->
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler" />
+    <section name="CGIntConfiguration" type="CGInt.Configuration.CGIntConfiguration" allowLocation="true" allowDefinition="Everywhere" />
+  </configSections>
+  <CGIntConfiguration>
+    <!--
+  The field mappings below represent the *internal* field names of the respective systems, not the display names. 
+  Anytime the internal fields of either TFS or ChangeGear listed below are modified, this file needs to be updated as well.
+  Muultiple tfs projects are supported, each with their own field mappings.
+  
+  The "project" sections below should be available in a configurable UI as follows:
+  The UI should allow for multiple TFS "projects" to be created, modified or deleted in the config. On initial setup (before the integration app can be used), projects should be created ("New" project)
+  Each project section needs to have a TFS project name (simple entry field to start, but can be expanded to a list of projects retrieved through a tfs api), 
+  a ChangeGear module name (dropdown list of pre-defined values: "Incident", "Problem", "Change"),
+  and the TFS field name that holds the ChangeGear ticket ID (simple entry field to start; available fields can be retrieved from a tfs api).
+  Once a new project is created, use a text entry field to capture the project name.
+  
+  For 1:1 field mappings, the UI should present a TFS field name (entry box to start, expand to list), a ChangeGear field name (entry/list) and a direction (CG to TFS, TFS to CG, BOTH)
+  For fields that present a string pick list, additional info is needed: The actual text 'value' of each of the field's list items and the list type (stringlist or intlist)
+  For fields that present an integer picklist, see below
+  
+  Field explanations:
+  project name is the tfs project name, module is the CG module entity and cgID is the tfs work item field that holds the linked CG ticket ID
+  Each line of the mappings section "fields" needs to have a unique "map" id
+  "tfs" is the tfs internal field name, "cg" is the internal cg field name, "dir" is the direction the fields will be updated:
+  "CGtoTFS" means the tfs field will be updated with the cg field value ONLY when cg initiates the request
+  "TFStoCG" means the cg field will be updated with the contents of the tfs field ONLY when tfs sends an event
+  "both" means the respective fields will be updated regardless of which system initiated the request
+  "type" indicates the field type: allowable values are "string" (default), "stringlist", "int" and "intlist"
+  "max" is the highest value an intlist can be assigned. i.e., if one system has a field whose value is > "max", the correspoding system's field will be set to "max".
+  -->
+    <project name="test" module="change" cgID="lol">
+      <mappings>
+        <fields map="1" tfs="Safe" cg="For" dir="both" tfsval="Demonstration" cgval="Hi" max="Christensen" type="int" />
+        <fields map="2" tfs="System.Reason" cg="Summary" dir="cgtotfs" />
+        <fields map="3" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" dir="both" />
+        <fields map="4" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" dir="both" />
+        <fields map="5" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" dir="both" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" dir="both" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="both" />
+        <fields map="8" />
+      </mappings>
+    </project>
+    <project name="QA Automation" module="problem" cgID="Microsoft.VSTS.TCM.SystemInfo">
+      <mappings>
+        <fields map="1" tfs="System.History" cg="Notes" dir="both" />
+        <fields map="2" />
+        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs" />
+        <fields map="4" tfs="Microsoft.VSTS.TCM.SystemInfo" cg="ItemID" dir="cgtotfs" />
+        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="10" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="cgtotfs" />
+      </mappings>
+    </project>
+    <project name="XA Automation" module="change" cgID="Microsoft.VSTS.Feedback.ApplicationType">
+      <mappings>
+        <fields map="1" tfs="System.History" cg="Notes" dir="both" />
+        <fields map="2" tfs="xenatix.Scrum2.Module" cg="UDF_aXisPageRef" dir="cgtotfs" />
+        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs" />
+        <fields map="4" tfs="Microsoft.VSTS.Feedback.ApplicationType" cg="ItemID" dir="cgtotfs" max="notastring" />
+        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="10" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="cgtotfs" />
+      </mappings>
+    </project>
+    <project name="New" module="incidentrequest" cgID="default">
+      <mappings>
+        <fields map="1" />
+      </mappings>
+    </project>
+    <project name="bar" module="incidentrequest" cgID="default">
+      <mappings>
+        <fields map="1" />
+      </mappings>
+    </project>
+    <project name="Blooby" module="incidentrequest" cgID="default">
+      <mappings>
+        <fields map="1" />
+      </mappings>
+    </project>
+    <project name="Peanut" module="incidentrequest" cgID="default">
+      <mappings>
+        <fields map="1" />
+      </mappings>
+    </project>
+    <project name="New Project" module="incidentrequest" cgID="default">
+      <mappings>
+        <fields map="1" />
+      </mappings>
+    </project>
+  </CGIntConfiguration>
+  <appSettings>
+    <!-- The settings below are for all mappings above. (Global to the app)-->
+    <add key="CGuser" value="cgadmin" />
+    <!-- Entry field in UI -->
+    <add key="CGpass" value="pass2" />
+    <!-- Password field in UI -->
+    <add key="TFSuser" value="headquarters\tlumia" />
+    <!-- entry field -->
+    <add key="TFSpass" value="pass" />
+    <!-- password field -->
+    <add key="CGapiPath" value="http://localhost/CGRestAPI/" />
+    <!-- entry field or separate into system name and path, then join to form url in config-->
+    <add key="TFSapiPath" value="http://silo:8080/tfs/Sunview/QA%20Automation/_apis/" />
+    <add key="TFSbasePath" value="http://silo:8080/tfs/Sunview/" />
+    <add key="IncidentModulePrefix" value="IR" />
+    <add key="cors:allowOrigins" value="*" />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+    <httpModules>
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" />
+    </httpModules>
+  </system.web>
+  <system.webServer>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules>
+      <remove name="ApplicationInsightsWebTracking" />
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" preCondition="managedHandler" />
+    </modules>
+  </system.webServer>
+  <log4net>
+    <!-- Defining output appenders -->
+    <appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="logs\\ClIntLog.txt" />
+      <!-- log file name in UI -->
+      <appendToFile value="True" />
+      <!-- append or overwrite flag in UI (radio buttons or a checkbox) -->
+      <maximumFileSize value="2000KB" />
+      <!-- spin control -->
+      <maxSizeRollBackups value="5" />
+      <!-- spin control -->
+      <RollingStyle value="Size" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date %-5level %m%n" />
+        <!-- The following pattern may be of use when debugging -->
+        <!-- conversionPattern value="%-5level %logger - %message%newline" -->
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="Debug" />
+      <!-- UI choices for log level are "info", "debug" or "all" -->
+      <appender-ref ref="RollingFileAppender" />
+    </root>
+  </log4net>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>

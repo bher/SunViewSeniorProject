@@ -318,4 +318,43 @@ public partial class _codebehind : System.Web.UI.Page
         doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
 
+    //Begin authentication functions
+    [System.Web.Services.WebMethod]
+    public static string checkUser(string user, string pass)
+    {
+        string success = SunViewLogin.AESEncryptDecrypt.DecryptStringAES(user, pass);
+
+        if (success.Equals("true"))
+        {
+            //Functions.userLoggedOut();
+            String ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (string.IsNullOrEmpty(ip))
+                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            // else
+            //     ip = ip.Split(',')[0];
+            SunViewLogin.Functions.saveIP(ip);
+        }
+
+        return success;
+    }
+
+    [System.Web.Services.WebMethod]
+    public static string checkIP()
+    {
+        String ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+        if (string.IsNullOrEmpty(ip))
+            ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+        //else
+        //     ip = ip.Split(',')[0];   
+
+        return SunViewLogin.Functions.IPchecker(ip);
+    }
+    [System.Web.Services.WebMethod]
+    public static void logout()
+    {
+        SunViewLogin.Functions.userLoggedOut();
+    }
+
 }

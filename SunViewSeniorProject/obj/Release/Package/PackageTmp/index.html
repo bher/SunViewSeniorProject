@@ -53,17 +53,14 @@
 		            try {
 		                var httpRequest = $http({
 		                    method: "POST",
-		                    url: "not_Default.aspx/checkUser",
+		                    url: "codebehind.aspx/checkUser",
 		                    dataType: 'json',
-		                    data: { user: document.getElementById("enuname").innerHTML, pass: document.getElementById("enupass").innerHTML },
-		                    headers: {
-		                        "Content-Type": "application/json"
-		                    }
+		                    data: { user: document.getElementById("enuname").innerHTML, pass: document.getElementById("enupass").innerHTML }
 		                });
 		                //if success
 		                httpRequest.success(function (data, status) {
 		                    if (data.d == "true") {
-		                        window.location.href = "/HtmlPage.html";
+		                        window.location.href = "HtmlPage.html";
 		                    }
 		                    else {
 		                        if ($scope.user.password != "")

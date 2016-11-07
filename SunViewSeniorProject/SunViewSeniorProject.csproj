@@ -84,7 +84,6 @@
     <Content Include="codebehind.aspx" />
     <Content Include="HtmlPage.html" />
     <Content Include="index.html" />
-    <Content Include="not_Default.aspx" />
     <Content Include="scripts\aes.js" />
     <Content Include="scripts\Encryption.js" />
     <Content Include="img\ChangeGear.png" />
@@ -92,13 +91,11 @@
     <Content Include="img\gears.jpg" />
     <Content Include="img\movinggears.gif" />
     <Content Include="scripts\JavaScript.js" />
-    <Content Include="scripts\routechecking.js" />
     <Content Include="scripts\ai.1.0.0-build00159.js" />
     <Content Include="scripts\ai.1.0.0-build00159.min.js" />
     <Content Include="styles\style.css" />
     <Content Include="styles\StyleSheet.css" />
     <Content Include="img\Trans.png" />
-    <Content Include="temp.html" />
     <Content Include="Web.config" />
     <Content Include="XMLFile.xml" />
   </ItemGroup>
@@ -109,10 +106,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Functions.cs" />
-    <Compile Include="not_Default.aspx.cs">
-      <DependentUpon>not_Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

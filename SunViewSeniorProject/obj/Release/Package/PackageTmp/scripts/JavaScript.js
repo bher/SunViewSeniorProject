@@ -1,5 +1,40 @@
 ﻿angular.module('myApp', ['ngMaterial'])
+    .controller("RouteCtrl", function($scope, $http){
+
+        /**********************************************************
+                           Ben's Functions
+        Authetication functions:
+        Checks if the user has logged in, on login stay on current page
+        Else redirects to login page.
+
+        Logout function will redirect user to login page and remove
+        their IP address from the data base.
+        **********************************************************/
+        $scope.checkIP = function () {
+
+            $http.post('codebehind.aspx/checkIP', {})
+                .success(function (data, status) {
+                    if (data.d == "false") {
+                        window.location.href = "index.html";
+                    }
+                })
+                .error(function (data, status) {
+                });
+        }
+
+        $scope.checkIP();
+
+        $scope.logout = function () {
+            $http.post('codebehind.aspx/logout', {})
+                .success(function (data, status) {
+                    window.location.href = "index.html";
+                })
+                .error(function (status) {
+                });
+        };
+    })
     .controller("TestCtrl", function ($scope, $http, $mdDialog) {
+
         $scope.myStatus = "";
         $scope.inputError = "";
         $scope.selectedIndex = null;
@@ -20,6 +55,7 @@
         Runs getprojects after every change. Keeps updated list of project names.
         **********************************************************/
         $scope.getProjects();
+
 
         /*********************************************************
         Saves the current project configuration to the XML file. 
