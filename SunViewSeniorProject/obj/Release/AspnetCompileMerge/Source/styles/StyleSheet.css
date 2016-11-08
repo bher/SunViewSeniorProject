@@ -1,33 +1,104 @@
-﻿.myBody div md-content md-tabs md-tabs-canvas {
-    background: linear-gradient(orange, yelloworange) !important;
-}
-md-input-container.md-default-theme label, 
- md-input-container.md-default-theme .md-placeholder{
-    color:grey !important;
-}
-
-md-input-container:not(.md-input-invalid).md-input-focused .md-input {
-    border-color: white;
-}
-
-md-input-container{
-    background-color:#d8d0d0 !important;
-}
-
-md-input-container.md-default-theme label,   
-md-input-container.md-default-theme .md-placeholder {  
-    color: #FDFE67 !important; 
-} 
-label {
-    color:black; font-weight:bold; font-size:20px;
-}
-
-selectedIndex{
+﻿selectedIndex{
     color:yellow;
 }
 selectedIndex2{
     background:gray;
 }
-.md-input{
-    padding:5px;
+md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+    color: orange !important;
+    background-color:orange !important;
+}
+md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]) {
+  color: rgb(233,235,237) !important;
+  font-size:15px !important;
+}
+
+md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused md-icon {
+  color: orange !important;
+  font-size:15px !important;
+}
+
+.darkbox{
+    color:rgb(233,235,237) !important;
+}
+.darkLabel{
+    color:rgb(233, 235, 237) !important;
+    font-weight:bold !important;
+    font-size:14px !important;
+}
+.lightbox{
+    color:black !important;
+}
+.lightLabel{
+    color:black !important;
+    font-weight:bold !important;
+    font-size:14px !important;
+}
+/*md-select-value.md-select-placeholder {
+  color: rgb(233,235,237) !important;
+}*/
+.darkbox span{
+    color:rgb(233,235,237) !important;
+}
+.lightbox span {
+    color:black !important;
+}
+.lightplace{
+     color: rgb(233,235,237) !important;
+}
+.save {
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 88px;
+    border-radius: 50px;
+    font-size: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom:5px solid;
+    border-left:5px solid;
+    border-color:rgb(54,61,69);
+    outline: rgb(54,61,69);
+    background-color:orange;
+    color:white;
+    font-weight:bold;
+}
+.saveTwo {
+    padding: 3px 9px 3px 9px;
+    margin: 8px 14px 8px 14px;
+    min-width: 88px;
+    border-radius: 15px;
+    font-size: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    outline:none;
+    border:none;
+    background-color:rgb(147,157,170);
+    color:white;
+    font-weight:bold;
+}
+.save:hover{
+    background-color:rgb(254,149,44) !important;
+}
+
+md-input-container .md-errors-spacer {
+    min-height: 0 !important;
+}
+.userInput {
+    margin:2px !important;
+}
+
+.userbox {
+    color:rgb(233,235,237) !important;
+    box-shadow: 0px 2px 0px white;
+}
+.AppendLabel{
+    color:rgb(233, 235, 237) !important;
+    font-weight:bold !important;
+    font-size:16px !important;
+}
+
+md-checkbox.md-checked.gray .md-icon {
+ background-color: rgb(147,157,170);
 }

@@ -21,7 +21,7 @@ public partial class _codebehind : System.Web.UI.Page
     {
         //CREATES XML DOC AND LIST. GETS ALL PROJECTS
         List<string> sends = new List<string>();
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var projects = doc.Descendants("project");
         //FOR EACH PROJECT, PUTS ITS NAME INTO A LIST AND SENDS TO FRONTEND
         foreach (var project in projects)
@@ -36,7 +36,7 @@ public partial class _codebehind : System.Web.UI.Page
     public static List<string> GetCGID(string projects)
     {
         List<string> sends = new List<string>();
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name = '" + projects + "']");
         if (project != null)
         {
@@ -52,7 +52,7 @@ public partial class _codebehind : System.Web.UI.Page
     public static List<string> GetNumberMappings(string projects)
     {
         List<string> sends = new List<string>();
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name = '" + projects + "']");
         if (project != null)
         {
@@ -67,7 +67,7 @@ public partial class _codebehind : System.Web.UI.Page
     [WebMethod]
     public static void SaveProject2(string pName, string mName, string cgID)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name = '" + pName + "']");
         project.SetAttributeValue("module", mName);
         if (project.Attribute("module").Value == "")
@@ -76,7 +76,7 @@ public partial class _codebehind : System.Web.UI.Page
         project.SetAttributeValue("cgID", cgID);
         if (project.Attribute("cgID").Value == "")
             project.Attribute("cgID").Remove();
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
 
     }
     [WebMethod]
@@ -84,7 +84,7 @@ public partial class _codebehind : System.Web.UI.Page
         string dir, string tfsVal, string cgVal, string type, string max)
     {
 
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name = '" + pName + "']");
         XElement selectedMap = null;
 
@@ -134,7 +134,7 @@ public partial class _codebehind : System.Web.UI.Page
             if (selectedMap.Attribute("type").Value == "")
                 selectedMap.Attribute("type").Remove();
         }
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
     [WebMethod]
     public static List<String> GetAllMappings(string projects, string number)
@@ -143,7 +143,7 @@ public partial class _codebehind : System.Web.UI.Page
         List<string> sends = new List<string>();
         XElement selectedMap = null;
         //LOADS XML FILE AS AN XDOCUMENT DOC
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         //LOADS THE SINGULAR MAPPING FIELD TO DISPLAY
         var project = doc.XPathSelectElement("//project[@name = '" + projects + "']");
         if (project == null)
@@ -175,7 +175,7 @@ public partial class _codebehind : System.Web.UI.Page
     [WebMethod]
     public static void CreateProject(string name)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var root = doc.XPathSelectElement("//CGIntConfiguration");
         XElement project = new XElement("project");
         project.SetAttributeValue("name", name);
@@ -187,21 +187,21 @@ public partial class _codebehind : System.Web.UI.Page
         project.Add(mappings);
         mappings.Add(fields);
         root.Add(project);
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
     [WebMethod]
     public static void DeleteProject(string pName)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name='" + pName + "']");
         project.RemoveNodes();
         project.Remove();
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
     [WebMethod]
     public static void DeleteMap(string pName, string fName)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name='" + pName + "']");
         var mappings = project.Element("mappings");
         var fields = mappings.Elements("fields");
@@ -210,12 +210,12 @@ public partial class _codebehind : System.Web.UI.Page
             if (field.Attribute("map").Value == fName)
                 field.Remove();
         }
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
     [WebMethod]
     public static void CreateMap(string pName, List<string> fNames)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var project = doc.XPathSelectElement("//project[@name='" + pName + "']");
         var mappings = project.Element("mappings");
         var fields = project.Descendants("fields");
@@ -227,14 +227,14 @@ public partial class _codebehind : System.Web.UI.Page
             {
                 newField.SetAttributeValue("map", i);
                 field.AddBeforeSelf(newField);
-                doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+                doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
                 return;
             }
             i++;
         }
         newField.SetAttributeValue("map", i);
         mappings.Add(newField);
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
 
     public static string AttributeValueOrEmpty(XElement element, string s)
@@ -248,10 +248,10 @@ public partial class _codebehind : System.Web.UI.Page
         }
     }
 
-    public static XDocument loadXML()
+    public XDocument loadXML()
     {
-        string absPath = (HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
-        XDocument doc = XDocument.Load(absPath);
+        string relPath = "~/App_Code/XMLFile.xml";
+        XDocument doc = XDocument.Load(relPath);
         return doc;
     }
 
@@ -259,7 +259,7 @@ public partial class _codebehind : System.Web.UI.Page
     public static List<string> GetUserInfo()
     {
         List<string> sends = new List<string>();
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var cguser = doc.XPathSelectElement("//appSettings/add[@key='CGuser']");
         var cgpass = doc.XPathSelectElement("//appSettings/add[@key='CGpass']");
         var tfsuser = doc.XPathSelectElement("//appSettings/add[@key='TFSuser']");
@@ -277,19 +277,19 @@ public partial class _codebehind : System.Web.UI.Page
     [WebMethod]
     public static void saveUserInfo(string cguser, string cgpass, string tfsuser, string tfspass, string cgpath)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         doc.XPathSelectElement("//appSettings/add[@key='CGuser']").Attribute("value").SetValue(cguser);
         doc.XPathSelectElement("//appSettings/add[@key='CGpass']").Attribute("value").SetValue(cgpass);
         doc.XPathSelectElement("//appSettings/add[@key='TFSuser']").Attribute("value").SetValue(tfsuser);
         doc.XPathSelectElement("//appSettings/add[@key='TFSpass']").Attribute("value").SetValue(tfspass);
         doc.XPathSelectElement("//appSettings/add[@key='CGapiPath']").Attribute("value").SetValue(cgpath);
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
     [WebMethod]
     public static List<string> getAppend()
     {
         List<string> sends = new List<string>();
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var appender = doc.XPathSelectElement("//log4net/appender");
         var temp = appender.Element("file").Attribute("value").Value;
         sends.Add(temp);
@@ -307,7 +307,7 @@ public partial class _codebehind : System.Web.UI.Page
     [WebMethod]
     public static void saveAppend(string file, string append, string size, string roll, string level)
     {
-        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        XDocument doc = XDocument.Load(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
         var appender = doc.XPathSelectElement("//log4net/appender");
         appender.Element("file").Attribute("value").SetValue(file);
         appender.Element("appendToFile").Attribute("value").SetValue(append);
@@ -315,7 +315,7 @@ public partial class _codebehind : System.Web.UI.Page
         appender.Element("maxSizeRollBackups").Attribute("value").SetValue(roll);
         appender = doc.XPathSelectElement("//log4net/root");
         appender.Element("level").Attribute("value").SetValue(level);
-        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(System.Web.HttpContext.Current.Server.MapPath(".") + "/XMLFile.xml");
     }
 
     //Begin authentication functions

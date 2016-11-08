@@ -93,9 +93,10 @@
     <Content Include="scripts\JavaScript.js" />
     <Content Include="scripts\ai.1.0.0-build00159.js" />
     <Content Include="scripts\ai.1.0.0-build00159.min.js" />
-    <Content Include="styles\style.css" />
     <Content Include="styles\StyleSheet.css" />
+    <Content Include="styles\style.css" />
     <Content Include="img\Trans.png" />
+    <Content Include="img\Trans2.png" />
     <Content Include="Web.config" />
     <Content Include="XMLFile.xml" />
   </ItemGroup>
@@ -114,6 +115,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\bherSeniorProject.pubxml" />
+    <None Include="Properties\PublishProfiles\bhertesting.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="styles/StyleSheet.css" >
+</head>
+<body ng-app="myApp" layout="column" ng-cloak style="background-color:darkgray;" class="myBody">
+    <!--<div style="background-color:white;"><img src="SoTSy7TN.png" style="width:10px; height:10px;" />Change<span style="color:orange;">gear</span>
+    Integration</div> -->
+    <div ng-controller="RouteCtrl"></div>
+    <div ng-cloak style="width:100%; height:100%;">
+        <md-content layout-fill style="background: linear-gradient(darkgray, white)">
+            <md-tabs  layout-fill md-border-bottom md-stretch-tabs="always">
+                <md-tab label="Projects">
+                    <md-tab-content ng-controller="TestCtrl" layout="row">
+                            <!--controller for whole projects tab -->
+                            <md-content flex="25" layout-fill>
+                                <!--div for projects name list. Takes up 25% left of page -->
+                                <md-toolbar layout="row" style="background:darkgrey; color:white;" layout-align="center center">
+                                    <h4 style="align-self:center; ">Projects</h4>
+                                </md-toolbar>
+                                <md-content layout-fill>
+                                    <!-- Angular content (The project name list) -->
+                                        <!-- THis is an extra md-content div, me trying to get the list to scroll. It won't though?-->
+                                        <md-list>
+                                            <!-- Project name list has two items. First is list, second is Project+ option -->
+                                            <md-list-item ng-model="prName" ng-repeat="proj in pnames" ng-click="getNumbers(proj, $index)" class="{selectedIndex: selectedIndex===$index}">
+                                                <h3 ng-class="{selected: proj.id === idSelectedProj}">{{proj}}</h3>
+                                            </md-list-item>
+                                            <md-list-item ng-click="showPrompt($event)">
+                                                <!-- Add project item at bottom of list -->
+                                                <h3>Project +</h3>
+                                            </md-list-item>
+                                        </md-list>
+                                </md-content>
+                            </md-content>
+                        <md-content flex="75" style="background-color:#c0eda5;" layout-align="center center" layout="column">
+                            <div flex="20" layout="row" layout-align="center center" style="background-color:dimgray; width:100%;">
+                                <div>
+                                <md-input-container>
+                                    <label>Module Name</label>
+                                    <md-select ng-model="mName">
+                                        <md-option value="incidentrequest">Incident</md-option>
+                                        <md-option value="problem">Problem</md-option>
+                                        <md-option value="change">Change</md-option>
+                                    </md-select> 
+                                </md-input-container>
+                                </div>
+                                <div>
+                                <md-input-container>
+                                    <label>CG ID</label>
+                                    <input ng-model="cgID" style="width:250px;">
+                                </md-input-container>
+                                </div>
+                            </div>
+                            <md-content flex="80" layout="row" style="background-color:darkgoldenrod; width:100%">
+                            <md-content flex="20" layout-fill layout-align="center center" style="background-color:darkgray; width:100%;">
+                                <md-list>
+                                    <md-list-item ng-model="fNames" ng-repeat="map in fiNames" ng-click="getMappings(map, $index)" ng-class="{selectedIndex2: selectedIndex2===$index}"> 
+                                        <h4 ng-class="{selected: map.id === idSelectedMap">{{map}}</h4>
+                                    </md-list-item>
+                                    <md-list-item ng-click="mapCreate()">
+                                        <h4>Field +</h4>
+                                    </md-list-item>
+                                </md-list>
+                            </md-content>
+                            <md-content flex="" layout-align="center center" layout="column" layout-fill style="background-color:gray; width:100%;">
+                            <div>
+                            <md-input-container>
+                                <label>TFS Name</label>
+                                <input ng-model="tfsName" /> 
+                            </md-input-container>
+                            <md-input-container>
+                                <label>CG Name</label>
+                                <input ng-model="cgName" /> 
+                            </md-input-container>
+                            <md-input-container>
+                            <label>Direction</label>
+                             <md-select ng-model="dir">
+                                <md-option value=""></md-option>
+                                <md-option value="cgtotfs">CG to TFS</md-option>
+                                <md-option value="tfstocg">TFS to CG</md-option>
+                                <md-option value="both">Both</md-option>
+                            </md-select> 
+                            </md-input-container>
+                            </div>
+                            <div>
+                            <md-input-container>
+                                <label>TFS Value</label>
+                                <input ng-model="tfsVal" /> 
+                            </md-input-container>
+                            <md-input-container>
+                                <label>CG Value</label>
+                                <input ng-model="cgVal" /> 
+                            </md-input-container>
+                            </div>
+                            <div>
+                            <md-input-container>
+                                <label>Type</label>
+                                <md-select ng-model="type">
+                                <md-option value=""></md-option>
+                                <md-option value="string">String</md-option>
+                                <md-option value="stringlist">String List</md-option>
+                                <md-option value="int">Int</md-option>
+                                <md-option value="intlist">Int List</md-option>
+                            </md-select>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Max</label>
+                                <input ng-model="max" /> 
+                            </md-input-container>
+                            </div>
+                            <div>
+                            <md-button ng-model="Save" ng-click="saveConfig()">Save</md-button>                        
+                            <md-button ng-model="delP" ng-click="projDelete()">Delete Current Project</md-button>                                       
+                            <md-button ng-model="delM" ng-click="mapDelete()">Delete Current Map</md-button>
+                            </div>
+                            {{inputError}}
+                            </md-content>
+                            </md-content>
+                        </md-content> <!-- End div for project tab fields -->
+                    </md-tab-content>
+                </md-tab>
+                <md-tab label="Users">
+                    <md-tab-content layout-align="center end" layout-fill ng-controller="UserCtrl" style="background:linear-gradient(gray,darkgray)">
+                            <!--Tying related angular functions to models on this tab-->
+                        <div  layout-fill layout="row" layout-align="center center" style="min-height:100px;">
+                        <div flex="25" layout-fill style="background:linear-gradient(orange, black)"></div>
+                        <div flex="50" layout-fill layout="column" layout-align="center center" style="background:linear-gradient(gray,dimgray);">
+                        <div layout-fill layout="column" layout-align="center center" style="background: url('Trans.png') no-repeat center; opacity:0.7; background-size:60%;">
+                        <div layout-align="center">
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">TFS Username</label>
+                            <input ng-model="tfsUser" style="color:white; font-weight:bold; font-size:16px;" /><br />
+                        </md-input-container>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">TFS Password</label>
+                            <input ng-model="tfsPass" style="color:white; font-weight:bold; font-size:16px;" /><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">CG Username</label>
+                            <input ng-model="cgUser"  style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">CG Password</label>
+                            <input ng-model="cgPass"  style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">CG Path</label>
+                            <input ng-model="cgPath"  style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                                {{notification}}<br />
+                                <md-button class="md-raised md-primary" ng-model="userSave" ng-click="saveUser()">Save</md-button>
+                        </div>
+                        </div>
+                        </div>
+                        <div flex="25" layout-fill style="background:linear-gradient(orange, black)"></div>
+                        </div>
+                    </md-tab-content>
+                </md-tab>
+                <md-tab label="Appenders">
+                    <md-tab-content layout-fill layout-align="center center" ng-controller="AppendCtrl" style ="background:linear-gradient(orange, yellow);">
+                        <div layout-fill layout-align="center center" layout="row" style="min-height:100px;">
+                        <div flex="25" layout-fill style="background:linear-gradient(#e57b16, #1e0c01);"></div>
+                        <div flex="50" layout-fill layout-align="center center" layout="column" style="background:linear-gradient(gray, darkgray);">
+                        <div layout-fill layout-align="center center" layout="column" style="background: url('img/Trans.png') no-repeat center; opacity:0.7; background-size:60%;">
+                        <div layout-align="center">
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">Log File Name</label>
+                            <input ng-model="fileName" style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <md-checkbox ng-model="overwrite" ng-true-value="'True'" ng-false-value="'False'">
+                           <!-- <input type="checkbox" ng-model="overwrite" ng-true-value="'True'" ng-false-value="'False'" />-->
+                            Overwrite file
+                        </md-checkbox>
+                        </div>
+                        <div>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">Max File Size</label>
+                            <input ng-model="fileSize" style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">Backup size</label>
+                            <input ng-model="backSize" style="color:white; font-weight:bold; font-size:16px;"/><br />
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <md-input-container>
+                            <label style="color:black; font-weight:bold; font-size:20px;">Root Level</label>
+                            <md-select ng-model="rootLevel" style="color:white; font-weight:bold; font-size:16px;">
+                            <md-option value="Info">Info</md-option>
+                            <md-option value="Debug">Debug</md-option>
+                            <md-option value="All">All</md-option>
+                        </md-select>
+                        </md-input-container>
+                        </div>
+                        <div>
+                        <button class="md-raised md-primary" ng-model="appendSave" ng-click="saveAppend()">Save</button><br />
+                        </div>
+                        {{apStatus}}
+                        </div>
+                        </div>
+                        <div flex="25" layout-fill style="background:linear-gradient(#e57b16, #1e0c01);"></div>
+                        </div>
+                    </md-tab-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+    <!-- Your application bootstrap  -->
+    <script type="text/javascript" src="scripts/JavaScript.js"></script>
+
+</body>
+</html>

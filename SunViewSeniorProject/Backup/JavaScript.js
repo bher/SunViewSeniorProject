@@ -10,22 +10,12 @@
         Logout function will redirect user to login page and remove
         their IP address from the data base.
         **********************************************************/
-        $scope.logout = function () {
-            $http.post('codebehind.aspx/logout', {})
-                .success(function (data, status) {
-                    window.location.href = "index.html";
-                })
-                .error(function (status) {
-                });
-        };
-
         $scope.checkIP = function () {
 
             $http.post('codebehind.aspx/checkIP', {})
                 .success(function (data, status) {
                     if (data.d == "false") {
-                        $scope.logout();
-                        //window.location.href = "index.html";
+                        window.location.href = "index.html";
                     }
                 })
                 .error(function (data, status) {
@@ -34,17 +24,26 @@
 
         $scope.checkIP();
 
+        $scope.logout = function () {
+            $http.post('codebehind.aspx/logout', {})
+                .success(function (data, status) {
+                    window.location.href = "index.html";
+                })
+                .error(function (status) {
+                });
+        };
     })
     .controller("TestCtrl", function ($scope, $http, $mdDialog) {
+
         $scope.myStatus = "";
         $scope.inputError = "";
-
+        $scope.selectedIndex = null;
+        $scope.selectedIndex2 = null;
         /*********************************************************
         Loads the names of all the projects in the XML file into pnames.
         pnames is the options for prName. Populates the dropdownlist.
         **********************************************************/
         $scope.getProjects = function () {
-            $scope.myStatus = "";
             $http.post('codebehind.aspx/GetAllProjects', { data: {} })
                 .success(function (data, status) {
                     $scope.pnames = data.d;
@@ -57,6 +56,7 @@
         **********************************************************/
         $scope.getProjects();
 
+
         /*********************************************************
         Saves the current project configuration to the XML file. 
         Tries to save all data, if it fails(no field selected) then uses
@@ -68,14 +68,14 @@
                 dir: $scope.dir, tfsVal: $scope.tfsVal, cgVal: $scope.cgVal, type: $scope.type, max: $scope.max
             })
             .success(function (data, status) {
-                $scope.myStatus = "Saved!";
+                $scope.myStatus = data.d;
             }).error(function (data, status) {
+                $scope.myStatus = "savep";
                 $http.post('codebehind.aspx/SaveProject2', {
                     pName: $scope.prName, mName: $scope.mName, cgID: $scope.cgID
                 })
                 .success(function (data, status) {
-                    //$scope.myStatus = "secondSave";
-                    $scope.myStatus = "Saved!";
+                    $scope.myStatus = "secondSave";
                 }).error(function (data, status) {
                     $scope.myStatus = "savep2";
                 });
@@ -89,10 +89,16 @@
         Calls getMappings at end to repopulate field variables(in case of project
         name switch while on a specific map number).
         ********************************************************************/
-        $scope.getNumbers = function (proj) {
+        $scope.getNumbers = function (proj, index) {
             $scope.inputError = "";
-            $scope.myStatus = "";
             $scope.prName = proj;
+            if ($scope.selectedIndex === null) {
+                $scope.selectedIndex = index;
+            }
+            else {
+                $scope.selectedIndex = index;
+            }
+
             $http.post('codebehind.aspx/GetNumberMappings', { projects: proj })
                 .success(function (data, status) {
                     $scope.fiNames = data.d;
@@ -106,14 +112,18 @@
                 }).error(function (data, status) {
                     $scope.myStatus = "getCGID";
                 });
-            $scope.getMappings($scope.fNames);
+            $scope.getMappings(1, 2);
         };
         /*****************************************************************
         Populates all remaining fields with specific map related information.
         ******************************************************************/
-        $scope.getMappings = function (map) {
-            $scope.myStatus = "";
-            $scope.fNames = map;
+        $scope.getMappings = function (map, index) {
+            if ($scope.selectedIndex2 === null) {
+                $scope.selectedIndex2 = index;
+            }
+            else {
+                $scope.selectedIndex2 = index;
+            }
             $http.post('codebehind.aspx/GetAllMappings', { projects: $scope.prName, number: map })
             .success(function (data, status) {
                 $scope.tfsName = data.d[0];
@@ -124,7 +134,7 @@
                 $scope.dir = data.d[5];
                 $scope.type = data.d[6];
             }).error(function (data, status) {
-                //$scope.myStatus = "getMaps";
+                $scope.myStatus = "getMaps";
             });
         };
         /*******************************************************************
@@ -132,7 +142,6 @@
         to refresh project names dropdownlist.
         ********************************************************************/
         $scope.projCreate = function (newName) {
-            $scope.myStatus = "";
             if (newName != "") {
                 for (var i = 0; i < $scope.pnames.length; i++) {
                     if (newName == $scope.pnames[i]) {
@@ -142,9 +151,10 @@
                 }
                 $http.post('codebehind.aspx/CreateProject', { name: newName })
                 .success(function (data, status) {
+                    $scope.myStatus = "success";
                     $scope.getProjects();
                 }).error(function (data, status) {
-                    $scope.myStatus = "create project failed";
+                    $scope.myStatus = "createP";
                 });
             };
         };
@@ -152,7 +162,6 @@
         Deletes currently selected project
         *****************************************************************************/
         $scope.projDelete = function () {
-            $scope.myStatus = "";
             if ($scope.pnames.length > 1) {
                 $http.post('codebehind.aspx/DeleteProject', { pName: $scope.prName })
                     .success(function (data, status) {
@@ -171,7 +180,6 @@
         Creates new mapping field with no attributes for current project
         ***************************************************************************/
         $scope.mapCreate = function () {
-            $scope.myStatus = "";
             $http.post('codebehind.aspx/CreateMap', { pName: $scope.prName, fNames: $scope.fiNames })
                 .success(function (data, status) {
                     $scope.myStatus = "map created";
@@ -185,7 +193,6 @@
         Deletes currently selected mapping field
         ****************************************************************************/
         $scope.mapDelete = function () {
-            $scope.myStatus = "";
             if ($scope.fiNames.length > 1) {
                 $http.post('codebehind.aspx/DeleteMap', { pName: $scope.prName, fName: $scope.fNames })
                     .success(function (data, status) {
@@ -220,7 +227,6 @@
         $scope.Mismatch = "";
         $scope.notification = "";
         $scope.getInfo = function () {
-            $scope.notification = "";
             $http.post('codebehind.aspx/GetUserInfo', { data: {} })
                 .success(function (data, status) {
                     $scope.tfsUser = data.d[0];
@@ -247,7 +253,6 @@
     .controller("AppendCtrl", function ($scope, $http) {
         $scope.apStatus = "";
         $scope.getAppend = function () {
-            $scope.apStatus = "";
             $http.post('codebehind.aspx/getAppend', { data: {} })
                 .success(function (data, status) {
                     $scope.fileName = data.d[0];
@@ -265,7 +270,7 @@
                 file: $scope.fileName, append: $scope.overwrite, size: $scope.fileSize, roll: $scope.backSize, level: $scope.rootLevel
             })
                 .success(function (data, status) {
-                    $scope.apStatus = "Saved!"
+                    $scope.apStatus = "success"
                 }).error(function (data, status) {
                     $scope.apStatus = status;
                 });
