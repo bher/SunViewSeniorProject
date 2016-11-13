@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,10 +80,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\authorized.txt" />
     <Content Include="App_Data\ipadd.txt" />
     <Content Include="App_Data\user.txt" />
     <Content Include="codebehind.aspx" />
-    <Content Include="HtmlPage.html" />
+    <Content Include="App.html" />
     <Content Include="index.html" />
     <Content Include="scripts\aes.js" />
     <Content Include="scripts\Encryption.js" />
@@ -98,7 +100,9 @@
     <Content Include="img\Trans.png" />
     <Content Include="img\Trans2.png" />
     <Content Include="Web.config" />
-    <Content Include="XMLFile.xml" />
+    <Content Include="XMLFile.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AESEncryptDecrypt.cs" />

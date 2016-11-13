@@ -10,6 +10,7 @@
         Logout function will redirect user to login page and remove
         their IP address from the data base.
         **********************************************************/
+        
         $scope.logout = function () {
             $http.post('codebehind.aspx/logout', {})
                 .success(function (data, status) {
@@ -19,9 +20,9 @@
                 });
         };
 
-        $scope.checkIP = function () {
+        $scope.checkAuthorization = function () {
 
-            $http.post('codebehind.aspx/checkIP', {})
+            $http.post('codebehind.aspx/checkAuthorization', {})
                 .success(function (data, status) {
                     if (data.d == "false") {
                         $scope.logout();
@@ -32,8 +33,8 @@
                 });
         }
 
-        $scope.checkIP();
-
+        $scope.checkAuthorization();
+        
     })
     .controller("TestCtrl", function ($scope, $http, $mdDialog) {
         $scope.myStatus = "";

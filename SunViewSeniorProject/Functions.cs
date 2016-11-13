@@ -8,16 +8,20 @@ namespace SunViewLogin
 {
     public class Functions
     {
-        
+        public static string Authenticate()
+        {
+            string auth = File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/authorized.txt");
+
+            return auth;
+        }
+        public static void authorizeUser(string success)
+        {
+            File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/authorized.txt", success);
+        }
+        /*
         public static void saveIP(string ipAdd)
         {
-            using (StreamWriter streamfile = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt"))
-            {
-                //Function to write ipAddress to txtfile
-                //Store whether the user is authorized or not.
-                streamfile.WriteLine(ipAdd);
-            }
-            //startTimer();
+            File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt", ipAdd);
         }
 
         public static string IPchecker(string ip)
@@ -25,24 +29,21 @@ namespace SunViewLogin
             string data;
             using (StreamReader streamfile = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt"))
             {
-                if ((data = streamfile.ReadLine()) == null)
-                    return "false";
-                else
-                if (data.Equals(ip))
-                    return "true";
-                else
-                    return "false";
+
+                if ((data = streamfile.ReadLine()) != null)
+                {
+                    if (data.Equals(ip))
+                        return "true";
+                }
+
+                return "false";
             }
         }
-
+        */
         public static void userLoggedOut()
         {
-            using (StreamWriter streamfile = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt"))
-            {
-                //Function to write ipAddress to txtfile
-                //Store whether the user is authorized or not.
-                streamfile.WriteLine("");
-            }
+
+            File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/authorized.txt", "false");
         }
     }
 }

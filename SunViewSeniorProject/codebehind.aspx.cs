@@ -323,33 +323,15 @@ public partial class _codebehind : System.Web.UI.Page
     public static string checkUser(string user, string pass)
     {
         string success = SunViewLogin.AESEncryptDecrypt.DecryptStringAES(user, pass);
-
-        if (success.Equals("true"))
-        {
-            //Functions.userLoggedOut();
-            String ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-            if (string.IsNullOrEmpty(ip))
-                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-            // else
-            //     ip = ip.Split(',')[0];
-            SunViewLogin.Functions.saveIP(ip);
-        }
+        SunViewLogin.Functions.authorizeUser(success);
 
         return success;
     }
 
     [System.Web.Services.WebMethod]
-    public static string checkIP()
+    public static string checkAuthorization()
     {
-        String ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-        if (string.IsNullOrEmpty(ip))
-            ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-        //else
-        //     ip = ip.Split(',')[0];   
-
-        return SunViewLogin.Functions.IPchecker(ip);
+        return SunViewLogin.Functions.Authenticate();
     }
     [System.Web.Services.WebMethod]
     public static void logout()
