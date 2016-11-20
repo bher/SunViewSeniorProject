@@ -28,7 +28,7 @@
 
                 <div class="text">User Password: </div>
 
-                <input class="txtbox" id="upass" type="password" ng-model="user.password">
+                <input class="txtbox" id="upass" type="password" ng-model="user.password"d>
 
                 </br></br>
 
@@ -46,7 +46,9 @@
     <script>
         var app = angular.module('myApp', [])
         app.controller('myControl', function ($scope, $http) {
-
+            $scope.resetpassword = function () {
+                window.location.href = "ForgotPassword.html"
+            };
 		        $scope.submit = function () {
 		            aesEncryption();
 

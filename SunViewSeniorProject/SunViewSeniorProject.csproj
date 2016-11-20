@@ -80,11 +80,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Answers.txt" />
     <Content Include="App_Data\authorized.txt" />
     <Content Include="App_Data\ipadd.txt" />
+    <Content Include="App_Data\SecurityQuestions.txt" />
     <Content Include="App_Data\user.txt" />
     <Content Include="codebehind.aspx" />
-    <Content Include="App.html" />
+    <Content Include="ForgotPassword.html" />
+    <Content Include="htmlpage.html" />
     <Content Include="index.html" />
     <Content Include="scripts\aes.js" />
     <Content Include="scripts\Encryption.js" />

@@ -319,7 +319,7 @@ public partial class _codebehind : System.Web.UI.Page
     }
 
     //Begin authentication functions
-    [System.Web.Services.WebMethod]
+    [WebMethod]
     public static string checkUser(string user, string pass)
     {
         string success = SunViewLogin.AESEncryptDecrypt.DecryptStringAES(user, pass);
@@ -328,15 +328,41 @@ public partial class _codebehind : System.Web.UI.Page
         return success;
     }
 
-    [System.Web.Services.WebMethod]
+    [WebMethod]
     public static string checkAuthorization()
     {
         return SunViewLogin.Functions.Authenticate();
     }
-    [System.Web.Services.WebMethod]
+    [WebMethod]
     public static void logout()
     {
         SunViewLogin.Functions.userLoggedOut();
     }
+    [WebMethod]
+    public static string[] getQuestion(string user)
+    {
 
+        string[] success = SunViewLogin.Functions.securityQuestion(user) ;
+        return success;
+        /*
+        if (success.Equals("true")) { 
+            //do something
+            return "true";
+        }
+        else
+            return "false";
+         */
+    }
+    [WebMethod]
+    public static string checkresponse(string aone, string atwo, string athree)
+    {
+        string success = SunViewLogin.Functions.checkAnswers(aone, atwo, athree);
+
+        return success;
+    }
+    [WebMethod]
+    public static void changepassword(string newpass)
+    {
+        SunViewLogin.Functions.changePassword(newpass);
+    }
 }
