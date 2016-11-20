@@ -82,7 +82,6 @@
   <ItemGroup>
     <Content Include="App_Data\Answers.txt" />
     <Content Include="App_Data\authorized.txt" />
-    <Content Include="App_Data\ipadd.txt" />
     <Content Include="App_Data\SecurityQuestions.txt" />
     <Content Include="App_Data\user.txt" />
     <Content Include="codebehind.aspx" />
