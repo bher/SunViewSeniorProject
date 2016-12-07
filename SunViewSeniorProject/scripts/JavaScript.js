@@ -1,5 +1,5 @@
 ﻿angular.module('myApp', ['ngMaterial'])
-    .controller("RouteCtrl", function($scope, $http){
+    .controller("RouteCtrl", function($scope, $http, $mdDialog, $window){
 
         /**********************************************************
                            Ben's Functions
@@ -31,6 +31,49 @@
                 })
                 .error(function (data, status) {
                 });
+        };
+        $scope.showPrompt = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title("Would you like to restore configuration to previous backup?")
+                .textContent("This will overwrite the current configuration! Current changes will be lost!")
+                .targetEvent(ev)
+                .ok('Restore')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function (result) {
+                $scope.restore();
+                $state.reload;
+            });
+        };
+        $scope.showConfirm = function (ev) {
+            var affirm = $mdDialog.confirm()
+                .title("Would you like to backup the current configuration?")
+                .textContent("This will overwrite the previous backup!")
+                .targetEvent(ev)
+                .ok('Backup')
+                .cancel('Cancel');
+            $mdDialog.show(affirm).then(function (result) {
+                $scope.backup();
+            });
+        };
+        $scope.restore = function () {
+            $http.post('codebehind.aspx/Restore', { data: {} })
+                .success(function (data, status) {
+                    $scope.myStatus = "RestoreSuccess";
+                    $scope.reloadRoute();
+                }).error(function (data, status) {
+                    $scope.myStatus = "Restore";
+                });
+        };
+        $scope.backup = function () {
+            $http.post('codebehind.aspx/Backup', { data: {} })
+                .success(function (data, status) {
+                    $scope.myStatus = "BackupSuccess";
+                }).error(function (data, status) {
+                    $scope.myStatus = "Backup";
+                });
+        };
+        $scope.reloadRoute = function () {
+            $window.location.reload();
         }
 
         $scope.checkAuthorization();
@@ -39,6 +82,17 @@
     .controller("TestCtrl", function ($scope, $http, $mdDialog) {
         $scope.myStatus = "";
         $scope.inputError = "";
+        $scope.selected = "PROJECTS";
+        $scope.selected1 = "MAPS";
+        $scope.idSelectedProj = null;
+        $scope.saveAble = false;
+        $scope.pAble = false;
+        $scope.mAble = false;
+        $scope.fAble = false;
+
+        $scope.setSelected = function (SelectedProj) {
+            $scope.idSelectedProj = SelectedProj;
+        };
 
         /*********************************************************
         Loads the names of all the projects in the XML file into pnames.
@@ -63,13 +117,56 @@
         Tries to save all data, if it fails(no field selected) then uses
         second httprequest to save module name and cg ID.
         *********************************************************/
-        $scope.saveConfig = function () {
+        $scope.saveConfig = function (event) {
+            if ($scope.max != null)
+            {
+                if ($scope.type != "intlist" && $scope.max != "")
+                {
+                    $scope.myStatus = "Type must be INTLIST for max to have a value. Change type or remove max";
+                    $scope.showAlert(event);
+                    return;
+                }
+                if(isNaN($scope.max))
+                {
+                    $scope.myStatus = "Max must be a positive integer";
+                    $scope.showAlert(event);
+                    return;
+                }
+                else
+                {
+                    if($scope.max < 0)
+                    {
+                        $scope.myStatus = "Max must be a positive integer";
+                        $scope.showAlert(event);
+                        return;
+                    }
+                }
+            }
+            if ($scope.cgVal != null)
+            {
+                if(isNaN($scope.cgVal))
+                {
+                    $scope.myStatus = "CG Value must be a positive integer";
+                    $scope.showAlert(event);
+                    return;
+                }
+                else
+                {
+                    if($scope.cgVal < 0)
+                    {
+                        $scope.myStatus = "CG Value must be a positive integer";
+                        $scope.showAlert(event);
+                        return;
+                    }
+                }
+            }
             $http.post('codebehind.aspx/SaveProject', {
                 pName: $scope.prName, mName: $scope.mName, cgID: $scope.cgID, fName: $scope.fNames, tfsName: $scope.tfsName, cgName: $scope.cgName,
                 dir: $scope.dir, tfsVal: $scope.tfsVal, cgVal: $scope.cgVal, type: $scope.type, max: $scope.max
             })
             .success(function (data, status) {
                 $scope.myStatus = "Saved!";
+                $scope.showAlert(event);
             }).error(function (data, status) {
                 $http.post('codebehind.aspx/SaveProject2', {
                     pName: $scope.prName, mName: $scope.mName, cgID: $scope.cgID
@@ -77,8 +174,10 @@
                 .success(function (data, status) {
                     //$scope.myStatus = "secondSave";
                     $scope.myStatus = "Saved!";
+                    $scope.showAlert(event);
                 }).error(function (data, status) {
                     $scope.myStatus = "savep2";
+                    $scope.showAlert(event);
                 });
             });
             // }
@@ -90,10 +189,18 @@
         Calls getMappings at end to repopulate field variables(in case of project
         name switch while on a specific map number).
         ********************************************************************/
-        $scope.getNumbers = function (proj) {
+        $scope.getNumbers = function (proj, id) {
+            $scope.selected = proj;
             $scope.inputError = "";
             $scope.myStatus = "";
             $scope.prName = proj;
+            $scope.setSelected(id);
+            $scope.selected1 = "MAPS";
+            $scope.saveAble = true;
+            $scope.pAble = true;
+            $scope.mAble = false;
+            $scope.fNames = null;
+            $scope.fAble = false;
             $http.post('codebehind.aspx/GetNumberMappings', { projects: proj })
                 .success(function (data, status) {
                     $scope.fiNames = data.d;
@@ -107,14 +214,24 @@
                 }).error(function (data, status) {
                     $scope.myStatus = "getCGID";
                 });
-            $scope.getMappings($scope.fNames);
+            $scope.tfsName = null;
+            $scope.cgName = null;
+            $scope.tfsVal = null;
+            $scope.cgVal = null;
+            $scope.type = null;
+            $scope.max = null;
+            $scope.dir = null;
+           // $scope.getMappings($scope.fNames);
         };
         /*****************************************************************
         Populates all remaining fields with specific map related information.
         ******************************************************************/
         $scope.getMappings = function (map) {
+            $scope.selected1 = map;
             $scope.myStatus = "";
             $scope.fNames = map;
+            $scope.mAble = true;
+            $scope.fAble = true;
             $http.post('codebehind.aspx/GetAllMappings', { projects: $scope.prName, number: map })
             .success(function (data, status) {
                 $scope.tfsName = data.d[0];
@@ -154,6 +271,14 @@
         *****************************************************************************/
         $scope.projDelete = function () {
             $scope.myStatus = "";
+            $scope.saveAble = false;
+            $scope.mAble = false;
+            $scope.pAble = false;
+            $scope.mName = null;
+            $scope.cgID = null;
+            $scope.fiNames = null;
+            $scope.selected = "PROJECTS";
+            $scope.selected1 = "MAPS";
             if ($scope.pnames.length > 1) {
                 $http.post('codebehind.aspx/DeleteProject', { pName: $scope.prName })
                     .success(function (data, status) {
@@ -173,9 +298,11 @@
         ***************************************************************************/
         $scope.mapCreate = function () {
             $scope.myStatus = "";
+            $scope.fAble = false;
             $http.post('codebehind.aspx/CreateMap', { pName: $scope.prName, fNames: $scope.fiNames })
                 .success(function (data, status) {
                     $scope.myStatus = "map created";
+                    $scope.fNames = null;
                     $scope.getNumbers($scope.prName);
                 }).error(function (data, status) {
                     $scope.myStatus = "map failed";
@@ -187,18 +314,23 @@
         ****************************************************************************/
         $scope.mapDelete = function () {
             $scope.myStatus = "";
-            if ($scope.fiNames.length > 1) {
+            $scope.mAble = false;
+            $scope.saveAble = false;
+            $scope.fAble = false;
+            $scope.selected1 = "MAPS";
+            //if ($scope.fiNames.length > 1) {
                 $http.post('codebehind.aspx/DeleteMap', { pName: $scope.prName, fName: $scope.fNames })
                     .success(function (data, status) {
                         $scope.myStatus = "map deleted";
+                        $scope.fNames = null;
                         $scope.getNumbers($scope.prName);
                     }).error(function (data, status) {
                         $scope.myStatus = "map delete failed";
                     });
-            }
-            else {
-                $scope.inputError = "There must be at least one mapping";
-            }
+            //}
+            //else {
+           //     $scope.inputError = "There must be at least one mapping";
+           // }
         };
         /***************************************************************************
         Pop-up prompt box for new project name
@@ -215,8 +347,39 @@
                 $scope.projCreate(result);
             });
         };
+        $scope.showDeleteP = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title("Are you sure you wish to delete the current project?")
+                .targetEvent(ev)
+                .ok('Delete')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function () {
+                $scope.projDelete();
+            });
+        };
+        $scope.showDeleteM = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title("Are you sure you wish to delete the current map?")
+                .targetEvent(ev)
+                .ok('Confirm')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function () {
+                $scope.mapDelete();
+            });
+        };
+        $scope.showAlert = function (ev) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title($scope.myStatus)
+                .ariaLabel('Alert Dialog Demo')
+                //.ok('Okay')
+                .targetEvent(ev)
+            );
+        };
     })
-    .controller("UserCtrl", function ($scope, $http) {
+    .controller("UserCtrl", function ($scope, $http, $mdDialog) {
         $scope.newStatus = {};
         $scope.Mismatch = "";
         $scope.notification = "";
@@ -234,18 +397,30 @@
                 });
         };
         $scope.getInfo();
-        $scope.saveUser = function () {
+        $scope.saveUser = function (event) {
             $http.post('codebehind.aspx/saveUserInfo', {
                 cguser: $scope.cgUser, cgpass: $scope.cgPass, tfsuser: $scope.tfsUser, tfspass: $scope.tfsPass, cgpath: $scope.cgPath
             })
             .success(function (data, status) {
                 $scope.notification = "Saved!";
+                $scope.showAlert(event);
             }).error(function (data, status) {
                 $scope.newStatus = status;
             });
         };
+        $scope.showAlert = function (ev) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title($scope.notification)
+                .ariaLabel('Alert Dialog Demo')
+                //.ok('Okay')
+                .targetEvent(ev)
+            );
+        };
     })
-    .controller("AppendCtrl", function ($scope, $http) {
+    .controller("AppendCtrl", function ($scope, $http, $mdDialog) {
         $scope.apStatus = "";
         $scope.getAppend = function () {
             $scope.apStatus = "";
@@ -261,16 +436,28 @@
                 });
         };
         $scope.getAppend();
-        $scope.saveAppend = function () {
+        $scope.saveAppend = function (event) {
             $http.post('codebehind.aspx/saveAppend', {
                 file: $scope.fileName, append: $scope.overwrite, size: $scope.fileSize, roll: $scope.backSize, level: $scope.rootLevel
             })
                 .success(function (data, status) {
                     $scope.apStatus = "Saved!"
+                    $scope.showAlert(event);
                 }).error(function (data, status) {
                     $scope.apStatus = status;
                 });
 
+        };
+        $scope.showAlert = function (ev) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title($scope.apStatus)
+                .ariaLabel('Alert Dialog Demo')
+                //.ok('Okay')
+                .targetEvent(ev)
+            );
         };
 
     });

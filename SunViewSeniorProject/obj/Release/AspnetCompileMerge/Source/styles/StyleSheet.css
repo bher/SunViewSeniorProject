@@ -1,9 +1,4 @@
-﻿selectedIndex{
-    color:yellow;
-}
-selectedIndex2{
-    background:gray;
-}
+﻿
 md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
     color: orange !important;
     background-color:orange !important;
@@ -79,7 +74,7 @@ md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item
     font-weight:bold;
 }
 .save:hover{
-    background-color:rgb(254,149,44) !important;
+    background-color:rgb(147,157,170) !important;
 }
 
 md-input-container .md-errors-spacer {

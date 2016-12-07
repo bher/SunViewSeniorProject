@@ -39,42 +39,42 @@
   "type" indicates the field type: allowable values are "string" (default), "stringlist", "int" and "intlist"
   "max" is the highest value an intlist can be assigned. i.e., if one system has a field whose value is > "max", the correspoding system's field will be set to "max".
   -->
-    <project name="test" module="incidentrequest" cgID="ApplicationType">
+    <project name="test" module="change" cgID="lol">
       <mappings>
-        <fields map="1" tfs="System.Title" cg="ItemID" dir="cgtotfs"/>
-        <fields map="2" tfs="System.Reason" cg="Summary" dir="cgtotfs"/>
-        <fields map="3" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type ="stringlist" dir="both"/>
-        <fields map="4" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type ="stringlist" dir="both"/>
-        <fields map="5" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type ="stringlist" dir="both"/>
-        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type ="stringlist" dir="both"/>
-        <fields map="7" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="both"/>
+        <fields map="1" tfs="Safe" cg="For" dir="both" tfsval="Demonstration" cgval="Hi" max="Christensen" type="int" />
+        <fields map="2" tfs="System.Reason" cg="Summary" dir="cgtotfs" max="2" type="intlist" />
+        <fields map="3" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" dir="both" />
+        <fields map="4" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" dir="both" />
+        <fields map="5" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" dir="both" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" dir="both" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="both" />
+        <fields map="8" />
       </mappings>
     </project>
-    <project name="QA Automation" module="incidentrequest" cgID="Microsoft.VSTS.TCM.SystemInfo">
+    <project name="QA Automation" module="problem" cgID="Microsoft.VSTS.TCM.SystemInfo">
       <mappings>
-        <fields map="1" tfs="System.History" cg="Notes" dir="both"/>
-        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs"/>
-        <fields map="4" tfs="Microsoft.VSTS.TCM.SystemInfo" cg="ItemID" dir="cgtotfs"/>
-        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs"/>
-        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="10" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="cgtotfs"/>
+        <fields map="1" tfs="System.History" cg="Notes" dir="both" max="2" type="intlist" />
+        <fields map="2" />
+        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs" />
+        <fields map="4" tfs="Microsoft.VSTS.TCM.SystemInfo" cg="ItemID" dir="cgtotfs" />
+        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" max="4" dir="cgtotfs" />
       </mappings>
     </project>
-    <project name="XA Automation" module="incidentrequest" cgID="Microsoft.VSTS.Feedback.ApplicationType">
+    <project name="XA Automation" module="change" cgID="Microsoft.VSTS.Feedback.ApplicationType">
       <mappings>
-        <fields map="1" tfs="System.History" cg="Notes" dir="both"/>
-        <fields map="2" tfs="xenatix.Scrum2.Module" cg="UDF_aXisPageRef" dir="cgtotfs"/>
-        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs"/>
-        <fields map="4" tfs="Microsoft.VSTS.Feedback.ApplicationType" cg="ItemID" dir="cgtotfs"/>
-        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs"/>
-        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type ="stringlist" max="4" dir="cgtotfs"/>
-        <fields map="10" tfs="Microsoft.VSTS.Common.Priority" cg="Priority" type="intlist" max="4" dir="cgtotfs"/>
+        <fields map="1" tfs="System.History" cg="Notes" dir="both" />
+        <fields map="2" tfs="xenatix.Scrum2.Module" cg="UDF_aXisPageRef" dir="cgtotfs" />
+        <fields map="3" tfs="System.Title" cg="Summary" dir="cgtotfs" />
+        <fields map="4" tfs="Microsoft.VSTS.Feedback.ApplicationType" cg="ItemID" dir="cgtotfs" max="notastring" />
+        <fields map="5" tfs="Microsoft.VSTS.TCM.ReproSteps" cg="Description" dir="cgtotfs" />
+        <fields map="6" tfs="Microsoft.VSTS.Common.Severity" tfsval="1 - Critical" cg="Impact" cgval="1" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="7" tfs="Microsoft.VSTS.Common.Severity" tfsval="2 - High" cg="Impact" cgval="2" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="8" tfs="Microsoft.VSTS.Common.Severity" tfsval="3 - Medium" cg="Impact" cgval="3" type="stringlist" max="4" dir="cgtotfs" />
+        <fields map="9" tfs="Microsoft.VSTS.Common.Severity" tfsval="4 - Low" cg="Impact" cgval="4" type="stringlist" max="4" dir="cgtotfs" />
       </mappings>
     </project>
   </CGIntConfiguration>

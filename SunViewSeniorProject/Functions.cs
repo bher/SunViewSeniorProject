@@ -18,28 +18,7 @@ namespace SunViewLogin
         {
             File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/authorized.txt", success);
         }
-        /*
-        public static void saveIP(string ipAdd)
-        {
-            File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt", ipAdd);
-        }
 
-        public static string IPchecker(string ip)
-        {
-            string data;
-            using (StreamReader streamfile = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(".") + "/App_Data/ipadd.txt"))
-            {
-
-                if ((data = streamfile.ReadLine()) != null)
-                {
-                    if (data.Equals(ip))
-                        return "true";
-                }
-
-                return "false";
-            }
-        }
-        */
         public static void userLoggedOut()
         {
 

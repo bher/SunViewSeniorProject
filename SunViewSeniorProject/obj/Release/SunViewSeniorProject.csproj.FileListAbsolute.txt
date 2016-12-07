@@ -17,3 +17,41 @@ c:\users\2592\documents\visual studio 2013\Projects\SunViewSeniorProject\SunView
 c:\users\2592\documents\visual studio 2013\Projects\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.dll
 c:\users\2592\documents\visual studio 2013\Projects\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.pdb
 c:\users\2592\documents\visual studio 2013\Projects\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.csprojResolveAssemblyReference.cache
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\ApplicationInsights.config
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\SunViewSeniorProject.dll.config
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\SunViewSeniorProject.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\SunViewSeniorProject.pdb
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.Web.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.ApplicationInsights.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.Web.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\bin\Microsoft.ApplicationInsights.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\obj\Release\SunViewSeniorProject.csprojResolveAssemblyReference.cache
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\obj\Release\SunViewSeniorProject.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject-master\SunViewSeniorProject\obj\Release\SunViewSeniorProject.pdb
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\ApplicationInsights.config
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\SunViewSeniorProject.dll.config
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\SunViewSeniorProject.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\SunViewSeniorProject.pdb
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.Web.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.ApplicationInsights.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.Web.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\bin\Microsoft.ApplicationInsights.xml
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.csprojResolveAssemblyReference.cache
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.dll
+C:\Users\2592\Downloads\SunViewSeniorProject-master\SunViewSeniorProject\SunViewSeniorProject\obj\Release\SunViewSeniorProject.pdb

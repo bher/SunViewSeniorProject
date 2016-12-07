@@ -95,7 +95,7 @@ public partial class _codebehind : System.Web.UI.Page
         project.SetAttributeValue("cgID", cgID);
         if (project.Attribute("cgID").Value == "")
             project.Attribute("cgID").Remove();
-        if (fName != "")
+        if (fName != "" && fName != null)
         {
             var fields = project.Descendants("fields");
             foreach (var field in fields)
@@ -315,6 +315,20 @@ public partial class _codebehind : System.Web.UI.Page
         appender.Element("maxSizeRollBackups").Attribute("value").SetValue(roll);
         appender = doc.XPathSelectElement("//log4net/root");
         appender.Element("level").Attribute("value").SetValue(level);
+        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+    }
+
+    [WebMethod]
+    public static void Backup()
+    {
+        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
+        doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile2.xml");
+    }
+
+    [WebMethod]
+    public static void Restore()
+    {
+        XDocument doc = XDocument.Load(HttpRuntime.AppDomainAppPath + "/XMLFile2.xml");
         doc.Save(HttpRuntime.AppDomainAppPath + "/XMLFile.xml");
     }
 
