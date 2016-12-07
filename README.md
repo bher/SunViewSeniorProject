@@ -1,7 +1,11 @@
 # SunViewSeniorProject
 
-Current problems:
+The application accesses an .xml file. Them XML file contains configuration parameter for Sunview's ChangeGear integration app. The project contains a UI that allows user to modify and save changes to the XML file.
 
-Logout button: With the addition of the HtmlPage.html, users will not be directed to temp.html anymore (which is where the logout button is), there the logout button needs to be added.
-The project works now as far as I know.
+The modications include:
+-Modifying "Projects"
+-Modifying fields for "Projects"
+-Modifying application settings
+-Modiyfing log settins
+-Backup/Restore the XML file.
 
