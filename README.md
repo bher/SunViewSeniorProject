@@ -9,3 +9,4 @@ The modications include:
 -Modiyfing log settins
 -Backup/Restore the XML file.
 
+Coded by Benjamin Her, Bryce Maldonado, Jennyfer Sanchez, and Justin Calean for USF Senior Project Fall 2016.
